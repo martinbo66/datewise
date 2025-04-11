@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { interpretDatePatterns } from '@/ai/flows/interpret-date-patterns';
 import { cn } from "@/lib/utils";
-import { format } from 'date-fns';
+import { format, formatISO, getDay } from 'date-fns';
 
 export default function Home() {
   const [dateDescription, setDateDescription] = useState('');
@@ -22,6 +22,14 @@ export default function Home() {
       setDates([]);
     }
   };
+
+  const handleClearAll = () => {
+    setDateDescription('');
+    setDates([]);
+    setSelected(undefined);
+  };
+
+
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
@@ -41,9 +49,13 @@ export default function Home() {
               onChange={(e) => setDateDescription(e.target.value)}
             />
           </div>
-          <Button onClick={handleGenerateDates} className="w-full bg-accent text-background hover:bg-accent/80">
+          <div className="flex flex-col space-y-2">
+            <Button onClick={handleGenerateDates} className="w-full bg-accent text-background hover:bg-accent/80">
             Generate Dates
           </Button>
+            <Button onClick={handleClearAll} variant="outline" className="w-full">Clear All</Button>
+          </div>
+
 
           {dates.length > 0 && (
             <div className="mt-4">
@@ -51,7 +63,7 @@ export default function Home() {
               <ul className="list-disc pl-5">
                 {dates.map((date) => (
                   <li key={date.toISOString()}>
-                    {format(date, 'PPP')}
+                    {format(date, 'EEEE, MMMM d, yyyy')}
                   </li>
                 ))}
               </ul>

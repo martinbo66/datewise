@@ -61,12 +61,11 @@ const generateDatesPrompt = ai.definePrompt({
     }),
   },
   prompt: `You are a date generator.
-
 Generate a list of dates in ISO format that match the following description:
 
 Description: {{{description}}}
 
-Assume the current year, or the following year if the current date is past the month specified in the description.
+Today's date is ${new Date().toLocaleDateString()}.  Please use the current year unless the month mentioned is prior to the current month, in which case, use the following year.
 
 Make sure all the generated dates are valid dates.`,
 });
