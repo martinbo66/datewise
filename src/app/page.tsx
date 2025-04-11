@@ -66,9 +66,13 @@ export default function Home() {
               onSelect={setSelected}
               defaultMonth={dates[0]}
               className={cn("border rounded-md")}
-              disabled={(date) =>
-                dates.length > 0 && !dates.some(d => d.toDateString() === date.toDateString())
-              }
+              disabled={(date) => {
+                return dates.length > 0 && !dates.some(d => {
+                  return d.getDate() === date.getDate() &&
+                         d.getMonth() === date.getMonth() &&
+                         d.getFullYear() === date.getFullYear();
+                });
+              }}
             />
           </div>
         </CardContent>
