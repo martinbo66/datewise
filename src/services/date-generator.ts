@@ -66,5 +66,7 @@ Generate a list of dates in ISO format that match the following description:
 
 Description: {{{description}}}
 
+Assume the current year, or the following year if the current date is past the month specified in the description.
+
 Make sure all the generated dates are valid dates.`,
 });
