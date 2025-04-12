@@ -28,6 +28,13 @@ export default function Home() {
     setDates([]);
     setSelected(undefined);
   };
+  
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleGenerateDates();
+    }
+  };
 
 
 
@@ -47,12 +54,18 @@ export default function Home() {
               placeholder="e.g., every Wednesday in May"
               value={dateDescription}
               onChange={(e) => setDateDescription(e.target.value)}
+              onKeyDown={handleKeyDown}
             />
           </div>
           <div className="flex flex-col space-y-2">
-            <Button onClick={handleGenerateDates} className="w-full bg-accent text-background hover:bg-accent/80">
-            Generate Dates
-          </Button>
+            <Button 
+              onClick={handleGenerateDates} 
+              className="w-full bg-accent text-background hover:bg-accent/80"
+              type="submit"
+              autoFocus
+            >
+              Generate Dates
+            </Button>
             <Button onClick={handleClearAll} variant="outline" className="w-full">Clear All</Button>
           </div>
 
