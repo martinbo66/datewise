@@ -65,7 +65,7 @@ Generate a list of dates in ISO format that match the following description:
 
 Description: {{{description}}}
 
-Today's date is ${new Date().toLocaleDateString()}.  Please use the current year unless the month mentioned is prior to the current month, in which case, use the following year.
+Today's date is ${new Date().toLocaleDateString()}.  Please use the current year unless the months mentioned are prior to the current month, in which case, use the next year.
 
 Make sure all the generated dates are valid dates.`,
 });
