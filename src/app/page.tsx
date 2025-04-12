@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { interpretDatePatterns } from '@/ai/flows/interpret-date-patterns';
 import { cn } from "@/lib/utils";
-import { format, formatISO, getDay } from 'date-fns';
+import { format, formatISO, getDay, parseISO } from 'date-fns';
 
 export default function Home() {
   const [dateDescription, setDateDescription] = useState('');
@@ -17,7 +17,13 @@ export default function Home() {
   const handleGenerateDates = async () => {
     const result = await interpretDatePatterns({ dateDescription });
     if (result && result.dates) {
-      setDates(result.dates.map(dateString => new Date(dateString)));
+      // Properly handle timezone issues by ensuring dates are created consistently
+      setDates(result.dates.map(dateString => {
+        // Extract just the date part from the ISO string (YYYY-MM-DD)
+        const datePart = dateString.split('T')[0];
+        // Parse using parseISO which handles timezone consistently
+        return parseISO(datePart);
+      }));
     } else {
       setDates([]);
     }
@@ -93,6 +99,7 @@ export default function Home() {
               className={cn("border rounded-md")}
               disabled={(date) => {
                 return dates.length > 0 && !dates.some(d => {
+                  // Compare dates by checking year, month, and day
                   return d.getDate() === date.getDate() &&
                          d.getMonth() === date.getMonth() &&
                          d.getFullYear() === date.getFullYear();
